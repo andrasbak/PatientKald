@@ -22,8 +22,6 @@ public class LogIn extends Fragment implements View.OnClickListener{
     ImageView logo;
     String pnavn, pcpr, pstue;
 
-    //hej
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
