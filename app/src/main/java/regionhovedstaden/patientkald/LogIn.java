@@ -1,5 +1,7 @@
 package regionhovedstaden.patientkald;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.preference.PreferenceManager;
@@ -35,7 +37,13 @@ public class LogIn extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         if (view == knap){
             System.out.println("HEJ!");
-            gemData();
+            //gemData();
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, new HovedMenu());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
         }
     }
     /*
