@@ -1,9 +1,13 @@
 package regionhovedstaden.patientkald;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +38,18 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
 
         if (view.equals(logud)){
 
+            clearSharedPreferences();
             closeFragment();
 
         }
 
         else if (view.equals(service)){
 
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, new ServiceMenu());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
             System.out.println("DU HAR TRYKKET SERVICE!");
 
         }
@@ -54,6 +64,14 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
     public void closeFragment(){
 
         getActivity().getFragmentManager().popBackStack();
+
+    }
+
+    public void clearSharedPreferences(){
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+
+        sharedPreferences.edit().clear().commit();
 
     }
 }

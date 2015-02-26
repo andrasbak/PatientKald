@@ -2,6 +2,8 @@ package regionhovedstaden.patientkald;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.preference.PreferenceManager;
@@ -17,7 +19,6 @@ public class LogIn extends Fragment implements View.OnClickListener{
 
     Button knap;
     EditText indtastetNavn, intastetCpr, indtastetStue;
-    String patientNavn, patientCpr, patientStue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,35 +38,38 @@ public class LogIn extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         if (view == knap){
             System.out.println("HEJ!");
-            //gemData();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container, new HovedMenu());
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+
+            if (indtastetNavn.getText().toString().equals("")){
+                toast();
+            }
+            else if (intastetCpr.getText().toString().equals("")){
+                toast();
+            }
+            else if (indtastetStue.getText().toString().equals("")){
+                toast();
+            }
+            else {
+                gemData();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container, new HovedMenu());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
 
         }
     }
     /*
-    Tjekker om data er indtastet i alle felter og gemmer data'en.
+    Gemmer data i shared preferences.
      */
     private void gemData(){
 
-        if (indtastetNavn.getText().toString().equals("")){
-            toast();
-        }
-        else if (intastetCpr.getText().toString().equals("")){
-            toast();
-        }
-        else if (indtastetStue.getText().toString().equals("")){
-            toast();
-        }
-        else{
-        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                .putString(patientNavn, indtastetNavn.getText().toString())
-                .putString(patientCpr, intastetCpr.getText().toString())
-                .putString(patientStue, indtastetStue.getText().toString()).commit();
-        }
+             PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                     .putString("patientNavn", indtastetNavn.getText().toString())
+                     .putString("patientCpr", intastetCpr.getText().toString())
+                     .putString("patientStue", indtastetStue.getText().toString())
+                     .commit();
+
     }
     private void toast(){
 
