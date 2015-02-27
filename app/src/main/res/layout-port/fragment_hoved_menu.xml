@@ -97,11 +97,20 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.9"
                 android:background="@drawable/service_selector"
-                android:text="Service"
                 android:id="@+id/service_knap"
                 android:textSize="22dp"
                 android:textColor="#ffffffff"
                 android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
+                android:text="Service"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColor="#173f6d" />
 
 
             </LinearLayout>
@@ -112,7 +121,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.45"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center">
 
         <View
             android:layout_width="0dp"
@@ -129,13 +139,22 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.9"
+                android:layout_weight="0.8"
                 android:background="@drawable/akut_selector"
-                android:text="Akut"
                 android:id="@+id/akut_knap"
                 android:textColor="#ffffffff"
                 android:textSize="30dp"
                 android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.1"
+                    android:text="Akut"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="#173f6d" />
+
 
             </LinearLayout>
 
