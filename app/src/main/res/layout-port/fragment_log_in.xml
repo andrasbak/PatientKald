@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     android:orientation="vertical"
-    tools:context="regionhovedstaden.patientkald.LogIn"
+    tools:context="regionhovedstaden.ui.LogIn"
     android:background="#ffffffff">
 
     <LinearLayout
@@ -65,7 +65,8 @@
                     android:id="@+id/tw_navn"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:textColor="#173f6d" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -106,7 +107,8 @@
                     android:id="@+id/tw_cpr"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:textColor="#173f6d" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -147,7 +149,8 @@
                     android:id="@+id/tw_stue"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:textColor="#173f6d" />
 
                 <EditText
                     android:layout_width="match_parent"

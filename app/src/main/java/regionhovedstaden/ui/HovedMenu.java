@@ -1,10 +1,8 @@
-package regionhovedstaden.patientkald;
+package regionhovedstaden.ui;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.preference.PreferenceManager;
@@ -56,6 +54,8 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
         else {
 
             System.out.println("DU HAR TRYKKET AKUT!");
+            String message = "akut";
+            ((MainActivity)getActivity()).bygBesked(message);
 
         }
 

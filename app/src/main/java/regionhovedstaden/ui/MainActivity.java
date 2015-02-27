@@ -1,13 +1,14 @@
-package regionhovedstaden.patientkald;
+package regionhovedstaden.ui;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.Map;
 
 
 public class MainActivity extends Activity {
@@ -19,6 +20,7 @@ public class MainActivity extends Activity {
 
         if(savedInstanceState == null){
 
+
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             LogIn logIn = new LogIn();
@@ -26,7 +28,6 @@ public class MainActivity extends Activity {
             fragmentTransaction.commit();
 
         }
-
     }
 
 
@@ -48,4 +49,17 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void bygBesked(String message){
+
+        String navn = PreferenceManager.getDefaultSharedPreferences(this).getString("patientNavn", "Intet Navn");
+        String cpr = PreferenceManager.getDefaultSharedPreferences(this).getString("patientCpr", "Intet CPR");
+        String stue = PreferenceManager.getDefaultSharedPreferences(this).getString("patientStue", "Ingen Stue");
+
+        String besked = navn+";"+cpr+";"+stue+";"+message;
+
+        System.out.println("BESKED: " + besked);
+
+    }
+
 }
