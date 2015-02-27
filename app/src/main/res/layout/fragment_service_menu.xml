@@ -20,7 +20,8 @@
             android:text="Servicemenu"
             android:textSize="22dp"
             android:textStyle="bold"
-            android:textColor="#ff090bff" />
+            android:textColor="#173f6d"
+            android:autoText="true" />
 
         </LinearLayout>
 
@@ -52,14 +53,18 @@
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/vand"
+                android:background="@drawable/vand_selector"
                 android:layout_weight="0.6"
                 android:id="@+id/vand_knap" />
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.2"/>
+                android:layout_weight="0.2"
+                android:text="Tørstig"
+                android:textStyle="bold"
+                android:textColor="#173f6d"
+                android:gravity="center_horizontal"/>
 
             </LinearLayout>
 
@@ -79,14 +84,18 @@
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/wc"
+                android:background="@drawable/wc_selector"
                 android:layout_weight="0.6"
                 android:id="@+id/wc_knap" />
 
-            <View
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.2"/>
+                android:layout_weight="0.2"
+                android:text="WC"
+                android:textStyle="bold"
+                android:textColor="#173f6d"
+                android:gravity="center_horizontal"/>
 
         </LinearLayout>
 
@@ -109,21 +118,29 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:gravity="center"
             android:orientation="vertical"
             android:weightSum="1">
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/mad"
+                android:background="@drawable/mad_selector"
                 android:layout_weight="0.6"
                 android:id="@+id/mad_knap" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:text="Sulten"
+                android:textStyle="bold"
+                android:textColor="#173f6d"
+                android:gravity="center_horizontal"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.4"/>
+                android:layout_weight="0.2"/>
 
         </LinearLayout>
 
@@ -131,21 +148,30 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:gravity="center"
             android:orientation="vertical"
             android:weightSum="1">
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/avis"
+                android:background="@drawable/avis_selector"
                 android:layout_weight="0.6"
-                android:id="@+id/avis_knap" />
+                android:id="@+id/avis_knap"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:text="Læsestof"
+                android:textStyle="bold"
+                android:textColor="#173f6d"
+                android:gravity="center_horizontal"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.4"/>
+                android:layout_weight="0.2"/>
 
         </LinearLayout>
 
