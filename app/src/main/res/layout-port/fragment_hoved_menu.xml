@@ -109,8 +109,8 @@
                 android:text="Service"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:textAlignment="center"
-                android:textColor="#173f6d" />
+                android:textColor="#173f6d"
+                android:gravity="center_horizontal"/>
 
 
             </LinearLayout>
@@ -153,7 +153,8 @@
                     android:text="Akut"
                     android:textSize="20dp"
                     android:textStyle="bold"
-                    android:textColor="#173f6d" />
+                    android:textColor="#173f6d"
+                    android:gravity="center_horizontal"/>
 
 
             </LinearLayout>
