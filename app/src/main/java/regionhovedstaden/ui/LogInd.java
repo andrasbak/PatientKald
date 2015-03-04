@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class LogIn extends Fragment implements View.OnClickListener{
+public class LogInd extends Fragment implements View.OnClickListener{
 
     Button knap;
     EditText indtastetNavn, intastetCpr, indtastetStue;
@@ -48,6 +48,7 @@ public class LogIn extends Fragment implements View.OnClickListener{
             }
             else {
                 gemData();
+                sletTekst();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container, new HovedMenu());
@@ -73,5 +74,13 @@ public class LogIn extends Fragment implements View.OnClickListener{
 
         Toast.makeText(getActivity(), "Udfyld alle informationer, Tak!",
                 Toast.LENGTH_SHORT).show();
+    }
+
+    private void sletTekst(){
+
+        indtastetNavn.setText("");
+        intastetCpr.setText("");
+        indtastetStue.setText("");
+
     }
 }

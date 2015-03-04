@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     android:orientation="vertical"
-    tools:context="regionhovedstaden.ui.LogIn"
+    tools:context="regionhovedstaden.ui.LogInd"
     android:background="#ffffffff">
 
     <LinearLayout

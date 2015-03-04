@@ -8,8 +8,6 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.Map;
-
 
 public class MainActivity extends Activity {
 
@@ -23,7 +21,7 @@ public class MainActivity extends Activity {
 
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            LogIn logIn = new LogIn();
+            LogInd logIn = new LogInd();
             fragmentTransaction.add(R.id.container, logIn);
             fragmentTransaction.commit();
 
