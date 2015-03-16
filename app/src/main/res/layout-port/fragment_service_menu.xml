@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     android:orientation="vertical"
-    tools:context="regionhovedstaden.ui.ServiceMenu"
+    tools:context="regionhovedstaden.ui.patient.ServiceMenu"
     android:background="#ffffffff">
 
     <LinearLayout

@@ -1,15 +1,26 @@
-package regionhovedstaden.ui;
+package regionhovedstaden;
 
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.format.Formatter;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.sql.SQLOutput;
+
+import regionhovedstaden.netvaerk.SendBesked;
+import regionhovedstaden.ui.HovedMenu;
+import regionhovedstaden.ui.R;
+import regionhovedstaden.ui.patient.LogInd;
+
 
 public class MainActivity extends Activity {
+
+    SendBesked sendBesked = new SendBesked();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +32,8 @@ public class MainActivity extends Activity {
 
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            LogInd logIn = new LogInd();
-            fragmentTransaction.add(R.id.container, logIn);
+            HovedMenu hovedMenu = new HovedMenu();
+            fragmentTransaction.add(R.id.container, hovedMenu);
             fragmentTransaction.commit();
 
         }
@@ -48,15 +59,20 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void bygBesked(String message){
+    public void bygBesked(String message, String check){
 
         String navn = PreferenceManager.getDefaultSharedPreferences(this).getString("patientNavn", "Intet Navn");
         String cpr = PreferenceManager.getDefaultSharedPreferences(this).getString("patientCpr", "Intet CPR");
         String stue = PreferenceManager.getDefaultSharedPreferences(this).getString("patientStue", "Ingen Stue");
+        WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+        String beacon = "BEACON";
 
-        String besked = navn+";"+cpr+";"+stue+";"+message;
+        String besked = navn+";"+cpr+";"+stue+";"+message+";"+ip+";"+beacon+";"+check;
 
-        System.out.println("BESKED: " + besked);
+        System.out.println("Besked: "+besked);
+
+        sendBesked.send(besked);
 
     }
 

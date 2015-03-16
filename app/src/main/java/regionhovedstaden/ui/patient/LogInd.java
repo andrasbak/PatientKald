@@ -1,4 +1,4 @@
-package regionhovedstaden.ui;
+package regionhovedstaden.ui.patient;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import regionhovedstaden.ui.R;
 
 
 public class LogInd extends Fragment implements View.OnClickListener{
@@ -51,7 +53,7 @@ public class LogInd extends Fragment implements View.OnClickListener{
                 sletTekst();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, new HovedMenu());
+                fragmentTransaction.replace(R.id.container, new PatientHovedMenu());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     android:orientation="vertical"
-    tools:context="regionhovedstaden.ui.LogInd"
+    tools:context="regionhovedstaden.ui.patient.LogInd"
     android:background="#ffffffff">
 
     <LinearLayout
@@ -23,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.6"
-            android:src="@drawable/regionh_logo"
+            android:src="@drawable/log_ind"
             android:padding="10dp"/>
         <View
             android:layout_width="0dp"

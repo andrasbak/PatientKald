@@ -1,4 +1,4 @@
-package regionhovedstaden.ui;
+package regionhovedstaden.ui.patient;
 
 import android.os.Bundle;
 import android.app.Fragment;
@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
+import regionhovedstaden.MainActivity;
+import regionhovedstaden.ui.R;
 
 public class ServiceMenu extends Fragment implements View.OnClickListener {
 
@@ -49,7 +52,8 @@ public class ServiceMenu extends Fragment implements View.OnClickListener {
             System.out.println("DU HAR TRYKKET AVIS!");
             message = "avis";
         }
-        ((MainActivity)getActivity()).bygBesked(message);
+        String check = "!";
+        ((MainActivity)getActivity()).bygBesked(message, check);
         closeFragment();
     }
 
