@@ -18,13 +18,12 @@ import regionhovedstaden.ui.plejer.PlejerHovedMenu;
 public class HovedMenu extends Fragment implements View.OnClickListener {
 
     Button patient, plejer;
-    String hej;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View hovedMenu = inflater.inflate(R.layout.fragment_log_in, container, false);
+        View hovedMenu = inflater.inflate(R.layout.fragment_hoved_menu, container, false);
 
         patient = (Button)hovedMenu.findViewById(R.id.menu_patient_knap);
         patient.setOnClickListener(this);
