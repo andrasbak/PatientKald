@@ -18,6 +18,7 @@ import regionhovedstaden.ui.plejer.PlejerHovedMenu;
 public class HovedMenu extends Fragment implements View.OnClickListener {
 
     Button patient, plejer;
+    String hej;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
