@@ -16,6 +16,8 @@ import regionhovedstaden.netvaerk.SendBesked;
 import regionhovedstaden.ui.HovedMenu;
 import regionhovedstaden.ui.R;
 import regionhovedstaden.ui.patient.LogInd;
+import regionhovedstaden.ui.patient.PatientHovedMenu;
+import regionhovedstaden.ui.plejer.PlejerHovedMenu;
 
 
 public class MainActivity extends Activity {
@@ -29,9 +31,9 @@ public class MainActivity extends Activity {
 
         if(savedInstanceState == null){
 
-
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
             HovedMenu hovedMenu = new HovedMenu();
             fragmentTransaction.add(R.id.container, hovedMenu);
             fragmentTransaction.commit();
@@ -69,7 +71,6 @@ public class MainActivity extends Activity {
         String beacon = "BEACON";
 
         String besked = navn+";"+cpr+";"+stue+";"+message+";"+ip+";"+beacon+";"+check;
-
         System.out.println("Besked: "+besked);
 
         sendBesked.send(besked);

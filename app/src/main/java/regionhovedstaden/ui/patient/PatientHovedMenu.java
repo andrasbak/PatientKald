@@ -69,6 +69,7 @@ public class PatientHovedMenu extends Fragment implements View.OnClickListener {
 
         getActivity().getFragmentManager().popBackStack();
 
+
     }
 
     public void clearSharedPreferences(){

@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import regionhovedstaden.ui.plejer.PlejerHovedMenu;
 public class HovedMenu extends Fragment implements View.OnClickListener {
 
     Button patient, plejer;
+    String brugerType;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +46,7 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
             fragmentTransaction.replace(R.id.container, new LogInd());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+            brugerType = "patient";
 
         }
         else {
@@ -51,8 +54,12 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
             fragmentTransaction.replace(R.id.container, new PlejerHovedMenu());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+            brugerType = "plejer";
 
         }
+
+        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                .putString("brugerType", brugerType).commit();
 
     }
 }

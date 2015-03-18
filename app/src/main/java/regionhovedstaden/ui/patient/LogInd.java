@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import regionhovedstaden.MainActivity;
 import regionhovedstaden.ui.R;
 
 
@@ -32,6 +33,13 @@ public class LogInd extends Fragment implements View.OnClickListener{
         intastetCpr = (EditText) logInd.findViewById(R.id.et_cpr);
         indtastetStue = (EditText) logInd.findViewById(R.id.et_stue);
 
+        if(PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getString("patientNavn", "Intet Navn")!= "Intet Navn"){
+
+            opretHovedMenu();
+
+        }
+
         return logInd;
     }
     @Override
@@ -51,11 +59,8 @@ public class LogInd extends Fragment implements View.OnClickListener{
             else {
                 gemData();
                 sletTekst();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.container, new PatientHovedMenu());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+
+                opretHovedMenu();
             }
 
         }
@@ -83,6 +88,16 @@ public class LogInd extends Fragment implements View.OnClickListener{
         indtastetNavn.setText("");
         intastetCpr.setText("");
         indtastetStue.setText("");
+
+    }
+
+    public void opretHovedMenu(){
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, new PatientHovedMenu());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
 
     }
 }
