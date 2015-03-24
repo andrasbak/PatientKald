@@ -10,6 +10,8 @@ import android.text.format.Formatter;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.baasbox.android.BaasDocument;
+
 import java.sql.SQLOutput;
 
 import regionhovedstaden.netvaerk.SendBesked;
@@ -70,10 +72,14 @@ public class MainActivity extends Activity {
         String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
         String beacon = "BEACON";
 
-        String besked = navn+";"+cpr+";"+stue+";"+message+";"+ip+";"+beacon+";"+check;
-        System.out.println("Besked: "+besked);
+        BaasDocument doc = new BaasDocument("Patientkald");
+        doc.put("navn", navn);
+        doc.put("cpr", cpr);
+        doc.put("stue", stue);
+        doc.put("ip", ip);
+        doc.put("beacon", beacon);
 
-        sendBesked.send(besked);
+        sendBesked.send(doc);
 
     }
 

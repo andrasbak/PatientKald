@@ -1,6 +1,9 @@
 package regionhovedstaden.netvaerk;
 
 import android.os.AsyncTask;
+
+import com.baasbox.android.BaasDocument;
+
 import java.io.*;
 import java.net.*;
 
@@ -9,6 +12,15 @@ import java.net.*;
  */
 public class SendBesked {
 
+    public BaasDocument send (BaasDocument doc){
+
+        System.out.println("BaasDoc: " + doc);
+
+        return doc;
+
+    }
+
+/*
     String serverName = "10.16.227.250";
     int port = 8080;
 
@@ -48,4 +60,6 @@ public class SendBesked {
             }
         }.execute();
     }
+
+*/
 }
