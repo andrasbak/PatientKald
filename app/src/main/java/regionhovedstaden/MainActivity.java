@@ -9,27 +9,24 @@ import android.preference.PreferenceManager;
 import android.text.format.Formatter;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.baasbox.android.BaasDocument;
-
-import java.sql.SQLOutput;
-
 import regionhovedstaden.netvaerk.SendBesked;
 import regionhovedstaden.ui.HovedMenu;
 import regionhovedstaden.ui.R;
-import regionhovedstaden.ui.patient.LogInd;
-import regionhovedstaden.ui.patient.PatientHovedMenu;
-import regionhovedstaden.ui.plejer.PlejerHovedMenu;
+
 
 
 public class MainActivity extends Activity {
 
     SendBesked sendBesked = new SendBesked();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        new GcmRegistrationAsyncTask(this).execute();
 
         if(savedInstanceState == null){
 
@@ -82,5 +79,7 @@ public class MainActivity extends Activity {
         sendBesked.send(doc);
 
     }
+
+
 
 }
