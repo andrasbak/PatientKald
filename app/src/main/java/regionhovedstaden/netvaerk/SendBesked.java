@@ -16,6 +16,8 @@ public class SendBesked {
 
         System.out.println("BaasDoc: " + doc);
 
+        String hej;
+
         return doc;
 
     }
