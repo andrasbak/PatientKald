@@ -1,4 +1,4 @@
-package regionhovedstaden;
+package regionhovedstaden.gcm;
 
 import android.app.Activity;
 import android.content.ComponentName;

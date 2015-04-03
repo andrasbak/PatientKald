@@ -60,9 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Servicemenu"
-                android:textStyle="bold"
-                android:textSize="22dp"
-                android:textColor="#173f6d"/>
+                style="@style/headerText"/>
 
         </LinearLayout>
 
@@ -105,8 +103,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.2"
                 android:text="Tørstig"
-                android:textStyle="bold"
-                android:textColor="#173f6d"
+                style="@style/ContentText"
                 android:gravity="center_horizontal"/>
 
             </LinearLayout>
@@ -136,8 +133,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.2"
                 android:text="WC"
-                android:textStyle="bold"
-                android:textColor="#173f6d"
+                style="@style/ContentText"
                 android:gravity="center_horizontal"/>
 
         </LinearLayout>
@@ -176,8 +172,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.2"
                 android:text="Sulten"
-                android:textStyle="bold"
-                android:textColor="#173f6d"
+                style="@style/ContentText"
                 android:gravity="center_horizontal"/>
 
             <View
@@ -207,8 +202,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.2"
                 android:text="Læsestof"
-                android:textStyle="bold"
-                android:textColor="#173f6d"
+                style="@style/ContentText"
                 android:gravity="center_horizontal"/>
 
             <View

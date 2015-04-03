@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import regionhovedstaden.AfstandOgBesked;
 import regionhovedstaden.MainActivity;
 import regionhovedstaden.ui.R;
 
@@ -14,6 +15,7 @@ public class ServiceMenu extends Fragment implements View.OnClickListener {
 
     ImageButton vand,mad,wc,avis;
     String message;
+    AfstandOgBesked afstandOgBesked = new AfstandOgBesked();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,8 +54,11 @@ public class ServiceMenu extends Fragment implements View.OnClickListener {
             System.out.println("DU HAR TRYKKET AVIS!");
             message = "avis";
         }
-        String check = "!";
-        ((MainActivity)getActivity()).bygBesked(message, check);
+
+        afstandOgBesked.bygPatientKald(message);
+        ((MainActivity)getActivity()).bindBeacon();
+        afstandOgBesked.findTaettesteBeacon();
+
         closeFragment();
     }
 

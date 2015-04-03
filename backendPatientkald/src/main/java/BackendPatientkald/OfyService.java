@@ -12,6 +12,8 @@ public class OfyService {
 
     static {
         ObjectifyService.register(RegistrationRecord.class);
+        ObjectifyService.register(PatientKald.class);
+        ObjectifyService.register(SygeplejerKald.class);
     }
 
     public static Objectify ofy() {

@@ -1,4 +1,4 @@
-package regionhovedstaden;
+package regionhovedstaden.gcm;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import regionhovedstaden.MainActivity;
 
 /**
  * Created by Mathias Lyngman on 27-03-2015.
@@ -34,7 +35,11 @@ import java.util.logging.Logger;
                 if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                     Logger.getLogger("GCM_RECEIVED").log(Level.INFO, extras.toString());
 
+
+
                     showToast(extras.getString("message"));
+
+
                 }
             }
             GcmBroadcastReceiver.completeWakefulIntent(intent);
@@ -47,6 +52,10 @@ import java.util.logging.Logger;
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                 }
             });
+
+
+
+
         }
     }
 

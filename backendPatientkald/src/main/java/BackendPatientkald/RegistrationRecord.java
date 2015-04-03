@@ -15,7 +15,7 @@ public class RegistrationRecord {
 
     @Index
     private String regId;
-    // you can add more fields...
+    private String brugertype;
 
     public RegistrationRecord() {
     }
@@ -25,6 +25,17 @@ public class RegistrationRecord {
     }
 
     public void setRegId(String regId) {
-        this.regId = regId;
+        this.regId = brugertype;
     }
+
+    public String getBrugertype() {
+        return brugertype;
+    }
+
+    public void setBrugertype(String brugertype) {
+        this.brugertype = brugertype;
+    }
+
+
+
 }

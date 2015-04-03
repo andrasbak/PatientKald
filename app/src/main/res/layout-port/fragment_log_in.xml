@@ -71,19 +71,18 @@
                     android:layout_height="0dp"
                     android:layout_weight="0.5"
                     android:text="Patient Navn:"
-                    android:textStyle="bold"
                     android:id="@+id/tw_navn"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:textSize="18dp"
-                    android:textColor="#173f6d" />
+                    style="@style/ContentText" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.5"
                     android:id="@+id/et_navn"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    style="@style/editText"/>
 
                 </LinearLayout>
 
@@ -113,19 +112,19 @@
                     android:layout_height="0dp"
                     android:layout_weight="0.5"
                     android:text="Patient CPR nr:"
-                    android:textStyle="bold"
                     android:id="@+id/tw_cpr"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:textSize="18dp"
-                    android:textColor="#173f6d" />
+                    style="@style/ContentText"
+/>
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.5"
                     android:id="@+id/et_cpr"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    style="@style/editText"/>
 
             </LinearLayout>
 
@@ -155,19 +154,18 @@
                     android:layout_height="0dp"
                     android:layout_weight="0.5"
                     android:text="Patient Stue:"
-                    android:textStyle="bold"
                     android:id="@+id/tw_stue"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:textSize="18dp"
-                    android:textColor="#173f6d" />
+                    style="@style/ContentText"/>
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.5"
                     android:id="@+id/et_stue"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    style="@style/editText"/>
 
             </LinearLayout>
 
@@ -192,9 +190,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.6"
             android:text="Log Ind"
-            android:textSize="22dp"
-            android:textColor="#ffffffff"
-            android:textStyle="bold"
+            style="@style/buttonText"
             android:background="@drawable/log_ind_selector"
             android:id="@+id/logind_knap" />
         

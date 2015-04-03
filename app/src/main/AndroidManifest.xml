@@ -13,6 +13,8 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
         android:allowBackup="true"
@@ -28,15 +30,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver
-            android:name="regionhovedstaden.GcmBroadcastReceiver"
+            android:name="regionhovedstaden.gcm.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="regionhovedstaden" />
             </intent-filter>
         </receiver>
-        <service android:name="regionhovedstaden.GcmIntentService" />
+
+        <service android:name="regionhovedstaden.gcm.GcmIntentService" />
+
     </application>
 
 </manifest>

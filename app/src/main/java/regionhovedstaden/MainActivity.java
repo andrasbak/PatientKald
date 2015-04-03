@@ -3,30 +3,36 @@ package regionhovedstaden;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
-import android.text.format.Formatter;
-import android.view.Menu;
-import android.view.MenuItem;
-import com.baasbox.android.BaasDocument;
-import regionhovedstaden.netvaerk.SendBesked;
+import android.util.Log;
+
+import org.altbeacon.beacon.Beacon;
+import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.RangeNotifier;
+import org.altbeacon.beacon.Region;
+
+import java.util.Collection;
+import java.util.HashMap;
+
 import regionhovedstaden.ui.HovedMenu;
 import regionhovedstaden.ui.R;
 
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements BeaconConsumer{
 
-    SendBesked sendBesked = new SendBesked();
-
+    protected static final String TAG = "Beacon ID & AFSTAND: ";
+    private BeaconManager beaconManager;
+    private HashMap beaconMap = App.beaconMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        new GcmRegistrationAsyncTask(this).execute();
 
         if(savedInstanceState == null){
 
@@ -37,49 +43,78 @@ public class MainActivity extends Activity {
             fragmentTransaction.add(R.id.container, hovedMenu);
             fragmentTransaction.commit();
 
+            beaconManager = BeaconManager.getInstanceForApplication(this);
+            beaconManager.getBeaconParsers().add(new BeaconParser()
+                    .setBeaconLayout("m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24"));
+
+            setPatient();
+
         }
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    protected void onDestroy() {
+        super.onDestroy();
+        beaconManager.unbind(this);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    protected void onPause() {
+        super.onPause();
+        if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(true);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(false);
     }
 
-    public void bygBesked(String message, String check){
+    @Override
+    public void onBeaconServiceConnect() {
+        beaconManager.setRangeNotifier(new RangeNotifier() {
 
-        String navn = PreferenceManager.getDefaultSharedPreferences(this).getString("patientNavn", "Intet Navn");
-        String cpr = PreferenceManager.getDefaultSharedPreferences(this).getString("patientCpr", "Intet CPR");
-        String stue = PreferenceManager.getDefaultSharedPreferences(this).getString("patientStue", "Ingen Stue");
-        WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
-        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-        String beacon = "BEACON";
+            @Override
+            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
 
-        BaasDocument doc = new BaasDocument("Patientkald");
-        doc.put("navn", navn);
-        doc.put("cpr", cpr);
-        doc.put("stue", stue);
-        doc.put("ip", ip);
-        doc.put("beacon", beacon);
+                for (Beacon beacon : beacons) {
+                    Log.i(TAG, "Afstanden til Beacn: " + beacon.toString()
+                            + " Er ca: " + beacon.getDistance());
+                    beaconMap.put(beacon.toString(), beacon.getDistance());
 
-        sendBesked.send(doc);
+                }
+                App.clear = true;
+                unBindBeacon();
+
+            }
+        });
+
+        try {
+            beaconManager.startRangingBeaconsInRegion(
+                    new Region("myRangingUniqueId", null, null, null));
+        } catch (RemoteException e) {   }
 
     }
 
+    private void unBindBeacon(){
 
+        beaconManager.unbind(this);
+
+    }
+
+    public void bindBeacon(){
+
+        beaconManager.bind(this);
+
+    }
+
+    public void setPatient(){
+
+        App.patientNavn = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("patientNavn", "Intet Navn");
+
+        App.patientStue = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("patientStue", "Ingen Stue");
+
+    }
 
 }

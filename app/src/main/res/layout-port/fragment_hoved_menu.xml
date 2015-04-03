@@ -44,8 +44,7 @@
             android:layout_weight="0.8"
             android:id="@+id/afdeling_et"
             android:text="Indtast afdeling"
-            android:textSize="18dp"
-            android:textColor="#173f6d"
+            style="@style/editText"
             android:gravity="center"/>
 
         </LinearLayout>
@@ -86,9 +85,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.2"
                 android:text="Patient"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:textColor="#173f6d"
+                style="@style/ContentText"
                 android:gravity="center_horizontal"/>
 
             </LinearLayout>
@@ -126,9 +123,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.2"
                 android:text="Plejer"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:textColor="#173f6d"
+                style="@style/ContentText"
                 android:gravity="center_horizontal"/>
 
         </LinearLayout>

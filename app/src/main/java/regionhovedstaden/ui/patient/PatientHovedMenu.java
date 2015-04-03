@@ -11,27 +11,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import regionhovedstaden.AfstandOgBesked;
 import regionhovedstaden.MainActivity;
 import regionhovedstaden.ui.R;
 
 public class PatientHovedMenu extends Fragment implements View.OnClickListener {
 
     Button logud, service, akut;
+    AfstandOgBesked afstandOgBesked = new AfstandOgBesked();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View hovedMenu = inflater.inflate(R.layout.fragment_patient_hoved_menu, container, false);
+        View patientHovedMenu = inflater
+                .inflate(R.layout.fragment_patient_hoved_menu, container, false);
 
-        logud = (Button)hovedMenu.findViewById(R.id.logud_knap);
+        logud = (Button)patientHovedMenu.findViewById(R.id.logud_knap);
         logud.setOnClickListener(this);
-        service = (Button)hovedMenu.findViewById(R.id.service_knap);
+        service = (Button)patientHovedMenu.findViewById(R.id.service_knap);
         service.setOnClickListener(this);
-        akut = (Button)hovedMenu.findViewById(R.id.akut_knap);
+        akut = (Button)patientHovedMenu.findViewById(R.id.akut_knap);
         akut.setOnClickListener(this);
 
-        return hovedMenu;
+        return patientHovedMenu;
     }
 
     @Override
@@ -58,8 +61,9 @@ public class PatientHovedMenu extends Fragment implements View.OnClickListener {
 
             System.out.println("DU HAR TRYKKET AKUT!");
             String message = "akut";
-            String check = "&";
-            ((MainActivity)getActivity()).bygBesked(message, check);
+
+            ((MainActivity)getActivity()).bindBeacon();
+            afstandOgBesked.bygPatientKald(message);
 
         }
 

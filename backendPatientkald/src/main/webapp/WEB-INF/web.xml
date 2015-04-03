@@ -14,8 +14,8 @@
         <init-param>
             <param-name>services</param-name>
             <param-value>BackendPatientkald.RegistrationEndpoint,
-                BackendPatientkald.MessagingEndpoint
-            </param-value>
+                BackendPatientkald.MessagingEndpoint,
+                BackendPatientkald.MyBeanEndpoint, BackendPatientkald.KaldEndpoint</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

@@ -60,18 +60,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Servicemenu"
-                android:textStyle="bold"
-                android:textSize="22dp"
-                android:textColor="#173f6d"/>
+                style="@style/headerText"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.16"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"
+        android:layout_weight="0.64"
         android:orientation="horizontal"
         android:weightSum="1">
 
@@ -82,16 +85,11 @@
             android:orientation="vertical"
             android:weightSum="1">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.2"/>
-
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@drawable/vand_selector"
-                android:layout_weight="0.5"
+                android:layout_weight="0.66"
                 android:id="@+id/vand_knap" />
 
             <TextView
@@ -99,8 +97,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.1"
                 android:text="Tørstig"
-                android:textStyle="bold"
-                android:textColor="#173f6d"
+                style="@style/ContentText"
                 android:gravity="center_horizontal"/>
 
             </LinearLayout>
@@ -112,16 +109,11 @@
             android:orientation="vertical"
             android:weightSum="1">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.2"/>
-
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@drawable/mad_selector"
-                android:layout_weight="0.5"
+                android:layout_weight="0.66"
                 android:id="@+id/mad_knap" />
 
             <TextView
@@ -129,8 +121,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.1"
                 android:text="Sulten"
-                android:textStyle="bold"
-                android:textColor="#173f6d"
+                style="@style/ContentText"
                 android:gravity="center_horizontal"/>
 
         </LinearLayout>
@@ -142,16 +133,12 @@
             android:orientation="vertical"
             android:weightSum="1">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.2"/>
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@drawable/avis_selector"
-                android:layout_weight="0.5"
+                android:layout_weight="0.66"
                 android:id="@+id/avis_knap"
                 android:layout_gravity="center_horizontal"/>
 
@@ -160,8 +147,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.1"
                 android:text="Læsestof"
-                android:textStyle="bold"
-                android:textColor="#173f6d"
+                style="@style/ContentText"
                 android:gravity="center_horizontal"/>
 
         </LinearLayout>
@@ -173,16 +159,11 @@
             android:orientation="vertical"
             android:weightSum="1">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.2"/>
-
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@drawable/wc_selector"
-                android:layout_weight="0.5"
+                android:layout_weight="0.66"
                 android:id="@+id/wc_knap" />
 
             <TextView
@@ -190,13 +171,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.1"
                 android:text="WC"
-                android:textStyle="bold"
-                android:textColor="#173f6d"
+                style="@style/ContentText"
                 android:gravity="center_horizontal"/>
 
         </LinearLayout>
 
 
-        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

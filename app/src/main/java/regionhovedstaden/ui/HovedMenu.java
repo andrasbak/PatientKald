@@ -10,8 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
-import regionhovedstaden.ui.patient.LogInd;
+import regionhovedstaden.App;
+import regionhovedstaden.gcm.GcmRegistrationAsyncTask;
+import regionhovedstaden.ui.R;import regionhovedstaden.ui.patient.LogInd;
 import regionhovedstaden.ui.patient.PatientHovedMenu;
 import regionhovedstaden.ui.plejer.PlejerHovedMenu;
 
@@ -20,6 +23,8 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
 
     Button patient, plejer;
     String brugerType;
+    EditText afdeling;
+    String gemtAfdeling;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,6 +36,10 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
         patient.setOnClickListener(this);
         plejer = (Button)hovedMenu.findViewById(R.id.menu_plejer_knap);
         plejer.setOnClickListener(this);
+        afdeling = (EditText)hovedMenu.findViewById(R.id.afdeling_et);
+        afdeling.setOnClickListener(this);
+
+        hentAfdeling();
 
        return hovedMenu;
     }
@@ -49,7 +58,7 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
             brugerType = "patient";
 
         }
-        else {
+        else if(view.equals(plejer)) {
 
             fragmentTransaction.replace(R.id.container, new PlejerHovedMenu());
             fragmentTransaction.addToBackStack(null);
@@ -58,8 +67,29 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
 
         }
 
+        else{
+
+            afdeling.setText("");
+
+        }
+
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                .putString("brugerType", brugerType).commit();
+                .putString("brugerType", brugerType)
+                .putString("afdeling", afdeling.getText().toString()).commit();
+
+        App.brugerType = brugerType;
+
+        new GcmRegistrationAsyncTask(getActivity()).execute();
+
+
+    }
+
+    public void hentAfdeling(){
+
+        gemtAfdeling = PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getString("afdeling", "");
+
+        afdeling.setText(gemtAfdeling);
 
     }
 }

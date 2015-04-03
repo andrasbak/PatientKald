@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import regionhovedstaden.AfstandOgBesked;
 import regionhovedstaden.MainActivity;
 import regionhovedstaden.ui.R;
 
@@ -60,9 +61,9 @@ public class LogInd extends Fragment implements View.OnClickListener{
                 gemData();
                 sletTekst();
 
+                ((MainActivity)getActivity()).setPatient();
                 opretHovedMenu();
             }
-
         }
     }
     /*
