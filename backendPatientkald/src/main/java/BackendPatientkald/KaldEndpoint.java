@@ -80,8 +80,8 @@ public class KaldEndpoint {
             System.out.println(kald + kaldId + beacon + navn + stue);
 
             PatientKald pk  = new PatientKald();
-            pk.setkaldId(kald);
-            pk.setkald(kaldId);
+            pk.setkaldId(kaldId);
+            pk.setkald(kald);
             pk.setbeacon(beacon);
             pk.setnavn(navn);
             pk.setStue(stue);

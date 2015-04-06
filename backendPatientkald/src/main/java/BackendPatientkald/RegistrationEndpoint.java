@@ -88,4 +88,6 @@ public class RegistrationEndpoint {
         return ofy().load().type(RegistrationRecord.class).filter("regId", regId).first().now();
     }
 
+
+
 }

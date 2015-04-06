@@ -14,9 +14,13 @@ import com.googlecode.objectify.annotation.Index;
 public class PatientKald {
 
     @Id
-    private String kaldId;
+    Long id;
+
+
 
     @Index
+    private String kaldId;
+
     private String kald;
     private String beacon;
     private String navn;
@@ -26,20 +30,20 @@ public class PatientKald {
     public PatientKald() {
     }
 
-    public String getkaldId() {
-        return kaldId;
-    }
-
-    public void setkaldId(String kaldId) {
-        this.kaldId = kaldId;
-    }
-
     public String getkald() {
         return kald;
     }
 
     public void setkald(String kald) {
         this.kald = kald;
+    }
+
+    public String getkaldId() {
+        return kaldId;
+    }
+
+    public void setkaldId(String kaldId) {
+        this.kaldId = kaldId;
     }
 
     public String getbeacon() {
