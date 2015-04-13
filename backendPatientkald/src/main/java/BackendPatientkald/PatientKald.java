@@ -19,13 +19,12 @@ public class PatientKald {
 
 
     @Index
-    private String kaldId;
+    private String kaldId, kald;
 
-    private String kald;
     private String beacon;
     private String navn;
     private String stue;
-
+    private String erKaldTaget;
 
     public PatientKald() {
     }
@@ -69,6 +68,15 @@ public class PatientKald {
     public void setStue(String stue) {
         this.stue = stue;
     }
+
+    public String getErKaldTaget() {
+        return erKaldTaget;
+    }
+
+    public void setErKaldTaget(String erKaldTaget) {
+        this.erKaldTaget = erKaldTaget;
+    }
+
 }
 
 

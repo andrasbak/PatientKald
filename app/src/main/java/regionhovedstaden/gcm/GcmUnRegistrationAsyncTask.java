@@ -20,16 +20,15 @@ import regionhovedstaden.Data.App;
 /**
  * Created by Mathias Lyngman on 27-03-2015.
  */
-public class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
+public class GcmUnRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
     private static Registration regService = null;
     private GoogleCloudMessaging gcm;
     private Context context;
     private String rootUrl = App.rootUrl;
 
     // TODO: change to your own sender ID to Google Developers Console project number, as per instructions above
-    private static final String SENDER_ID = App.SENDER_ID;
 
-    public GcmRegistrationAsyncTask(Context context) {
+    public GcmUnRegistrationAsyncTask(Context context) {
         this.context = context;
     }
 
@@ -59,15 +58,14 @@ public class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
             if (gcm == null) {
                 gcm = GoogleCloudMessaging.getInstance(context);
             }
-            String regId = gcm.register(SENDER_ID);
-            App.regId=regId;
-            msg = "Device registered, registration ID=" + regId;
+            String regId = App.regId;
+            msg = "Device unregistered, registration ID=" + regId;
 
             // You should send the registration ID to your server over HTTP,
             // so it can use GCM/HTTP or CCS to send messages to your app.
             // The request to your server should be authenticated if your app
             // is using accounts.
-            regService.register(regId+"!"+App.brugerType).execute();
+            regService.unregister(regId).execute();
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -78,7 +76,7 @@ public class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String msg) {
-        //Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
         Logger.getLogger("REGISTRATION").log(Level.INFO, msg);
     }
 }

@@ -11,14 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import regionhovedstaden.AfstandOgBesked;
 import regionhovedstaden.MainActivity;
+import regionhovedstaden.gcm.GcmUnRegistrationAsyncTask;
 import regionhovedstaden.ui.R;
 
 public class PatientHovedMenu extends Fragment implements View.OnClickListener {
 
     Button logud, service, akut;
-    AfstandOgBesked afstandOgBesked = new AfstandOgBesked();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,10 +59,9 @@ public class PatientHovedMenu extends Fragment implements View.OnClickListener {
         else {
 
             System.out.println("DU HAR TRYKKET AKUT!");
-            String message = "akut";
+            String besked = "akut";
 
-            ((MainActivity)getActivity()).bindBeacon();
-            afstandOgBesked.bygPatientKald(message);
+            ((MainActivity)getActivity()).bindBeacon(besked);
 
         }
 

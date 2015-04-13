@@ -5,12 +5,8 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.NotFoundException;
-import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.api.datastore.QueryResultIterator;
-import com.googlecode.objectify.cmd.Query;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -36,37 +32,71 @@ public class KaldEndpoint {
 
     private static final int DEFAULT_LIST_LIMIT = 20;
 
-
     /**
-     * Registrer et patientkald til backend
+     * Registrer et kald til backend
      *
-     * @param kaldString The Google Cloud Messaging registration Id to add
+     * @param kaldString pakke med data fra patient eller sygeplejer
      */
     @ApiMethod(name = "kald", path = "kald")
     public void kald(@Named("kaldString") String kaldString) throws IOException {
 
-        String[] parts = kaldString.split(":");
+        String[] parts = kaldString.split("!");
         String kald = parts[0];
-        System.out.println(kald);
+        System.out.println(kald+"-----------------------------------------------");
 
         //Hvis kaldet kommer fra sygeplejeren
-        if(kald.equals("sygeplejerAcceptDeny")){
+        if(kald.equals("sygeplejerAcceptDeny")) {
+            //Send confirmation if accept and find next in list of caretakers closest if deny unless call is taken"
             String kaldId = parts[1];
             String data = parts[2];
-            if(data.equals("accept")  || data.equals("deny")){
-                //Send confirmation if accept and find next in list of caretakers closest if deny unless call is taken"
-                System.out.println(data);
-            }
-            else if(kald.equals("sygeplejerBeacon")){
+            String regId = parts[3];
 
-                //Store beacondistance until all caretakers have answered
-                SygeplejerKald sk = new SygeplejerKald();
-                sk.setKaldId(kaldId);
-                sk.setData(data);
-                System.out.println(data);
+            PatientKald erKaldTaget = ofy().load().type(PatientKald.class).filter("kaldId", kaldId).first().now();
+            if (data.equals("accept")) {
+                System.out.println("accept");
+                if(erKaldTaget.getErKaldTaget().equals("false")){
+                    System.out.println("erkaldtaget = false");
+                    MessagingEndpoint.sendMessageToOne("Confirmation"+"!"+"Patientkald accepteret",regId);
+                    erKaldTaget.setErKaldTaget("true");
+                    ofy().save().entity(erKaldTaget).now();
+
+                }
+                else{
+                    System.out.println("erkaldtaget = true");
+                    MessagingEndpoint.sendMessageToOne("Confirmation"+"!"+"Patientkald ikke accepteret",regId);
+                }
+
             }
             else{
+                System.out.println("hej");
 
+                askIfYouCanTakeAssignment(kaldId, "deny");
+            }
+
+        }
+        else if(kald.equals("sygeplejerBeacon")){
+            String kaldId = parts[1];
+            String data = parts[2];
+            String regid = parts[3];
+
+            //Store beacondistance until all caretakers have answered
+            SygeplejerKald sk = new SygeplejerKald();
+            sk.setKald(kald);
+            sk.setKaldId(kaldId);
+            sk.setData(data);
+            sk.setRegId(regid);
+            ofy().save().entity(sk).now();
+            System.out.println("data: " + data);
+            System.out.println("kaldid: "+ kaldId);
+
+            int listeAfSygeplejere = ofy().load().type(RegistrationRecord.class).filter("brugertype", "plejer").list().size();
+            System.out.println("listeafsygeplejesker: "+listeAfSygeplejere);
+            List<SygeplejerKald> beaconliste = ofy().load().type(SygeplejerKald.class).filter("kaldId", kaldId).list();
+            System.out.println(beaconliste.size());
+
+            if(listeAfSygeplejere == beaconliste.size() /*hvad nu hvis der er en der ikke svare...*/){
+
+                askIfYouCanTakeAssignment(kaldId, "beacon");
             }
 
         }
@@ -85,18 +115,73 @@ public class KaldEndpoint {
             pk.setbeacon(beacon);
             pk.setnavn(navn);
             pk.setStue(stue);
+            pk.setErKaldTaget("false");
             ofy().save().entity(pk).now();
-            MessagingEndpoint.sendMessage(kaldId + "hvorerdu");
+
+            MessagingEndpoint.sendMessage("hvorerdu" + "!" + kaldId +"!"+ beacon);
+            System.out.println("efter sendt hvorerdu");
         }
 
     }
 
+
+    private void askIfYouCanTakeAssignment(String kaldId, String beaconEllerDeny) throws IOException {
+        System.out.println("AskMetode");
+        List<SygeplejerKald> sorteredeBeacons = ofy().load().type(SygeplejerKald.class).filter("kaldId",kaldId).order("data").list();
+        for(SygeplejerKald hej: sorteredeBeacons){
+            System.out.println("Sorteret liste: " + hej.getData());
+        }
+
+        SygeplejerKald tettestPaa = sorteredeBeacons.get(0);
+        SygeplejerKald andentaettestpå = sorteredeBeacons.get(1);
+        System.out.println("Taettest paa: " + tettestPaa.getRegId());
+        System.out.println("andentaettest paa: "+ andentaettestpå.getRegId());
+
+        PatientKald kald = ofy().load().type(PatientKald.class).filter("kaldId", kaldId).first().now();
+        String message = "KanDuTageDen"+"!"+kaldId+"!"+kald.getnavn()+"!"+kald.getStue()+"!"+kald.getkald();
+        System.out.println(message);
+        MessagingEndpoint.sendMessageToOne(message,tettestPaa.getRegId());
+        MessagingEndpoint.sendMessageToOne(message,andentaettestpå.getRegId());
+    }
+
+
+
+
+
+    @ApiMethod(name = "sorterpatientkald", path = "sorterkald")
+    public CollectionResponse<PatientKald> sorterPatientKald() {
+        List<PatientKald> records = ofy().load().type(PatientKald.class).filter("kaldId", "hej").order("kald").list();
+        return CollectionResponse.<PatientKald>builder().setItems(records).build();
+    }
+
+    @ApiMethod(name = "sortersygeplejerkald", path = "sorterSygeplejerkald")
+    public CollectionResponse<SygeplejerKald> sorterSygeplejerKald() {
+        List<SygeplejerKald> records = ofy().load().type(SygeplejerKald.class).filter("kaldId", "hej").order("kald").list();
+        return CollectionResponse.<SygeplejerKald>builder().setItems(records).build();
+    }
 
 
     @ApiMethod(name = "findkald", path = "findkald")
     public PatientKald findRecord(@Named("kaldid") String kaldId) {
         return ofy().load().type(PatientKald.class).filter("kaldId", kaldId).first().now();
     }
+
+    @ApiMethod(name = "listPatientKald")
+    public CollectionResponse<PatientKald> listpatientkald(@Named("count") int count) {
+        List<PatientKald> records = ofy().load().type(PatientKald.class).limit(count).list();
+        return CollectionResponse.<PatientKald>builder().setItems(records).build();
+    }
+
+    @ApiMethod(name = "listSygeplejerKald", path = "sygeplejerkald")
+    public CollectionResponse<SygeplejerKald> listsygeplejekald(@Named("count") int count) {
+        List<SygeplejerKald> records = ofy().load().type(SygeplejerKald.class).limit(count).list();
+        return CollectionResponse.<SygeplejerKald>builder().setItems(records).build();
+    }
+
+
+
+
+
 
 
 
@@ -108,7 +193,7 @@ public class KaldEndpoint {
      * @return the entity with the corresponding ID
      * @throws NotFoundException if there is no {@code PatientKald} with the provided ID.
      */
-    @ApiMethod(
+    /*@ApiMethod(
             name = "get",
             path = "patientKald/{id}",
             httpMethod = ApiMethod.HttpMethod.GET)
@@ -119,12 +204,12 @@ public class KaldEndpoint {
             throw new NotFoundException("Could not find PatientKald with ID: " + id);
         }
         return patientKald;
-    }
+    }*/
 
     /**
      * Inserts a new {@code PatientKald}.
      */
-    @ApiMethod(
+    /*@ApiMethod(
             name = "insert",
             path = "patientKald",
             httpMethod = ApiMethod.HttpMethod.POST)
@@ -138,7 +223,7 @@ public class KaldEndpoint {
         logger.info("Created PatientKald.");
 
         return ofy().load().entity(patientKald).now();
-    }
+    }*/
 
     /**
      * Updates an existing {@code PatientKald}.
@@ -149,7 +234,7 @@ public class KaldEndpoint {
      * @throws NotFoundException if the {@code id} does not correspond to an existing
      *                           {@code PatientKald}
      */
-    @ApiMethod(
+    /*@ApiMethod(
             name = "update",
             path = "patientKald/{id}",
             httpMethod = ApiMethod.HttpMethod.PUT)
@@ -159,7 +244,7 @@ public class KaldEndpoint {
         ofy().save().entity(patientKald).now();
         logger.info("Updated PatientKald: " + patientKald);
         return ofy().load().entity(patientKald).now();
-    }
+    }*/
 
     /**
      * Deletes the specified {@code PatientKald}.
@@ -168,7 +253,7 @@ public class KaldEndpoint {
      * @throws NotFoundException if the {@code id} does not correspond to an existing
      *                           {@code PatientKald}
      */
-    @ApiMethod(
+    /*@ApiMethod(
             name = "remove",
             path = "patientKald/{id}",
             httpMethod = ApiMethod.HttpMethod.DELETE)
@@ -176,7 +261,7 @@ public class KaldEndpoint {
         checkExists(id);
         ofy().delete().type(PatientKald.class).id(id).now();
         logger.info("Deleted PatientKald with ID: " + id);
-    }
+    }*/
 
     /**
      * List all entities.
@@ -185,7 +270,7 @@ public class KaldEndpoint {
      * @param limit  the maximum number of entries to return
      * @return a response that encapsulates the result list and the next page token/cursor
      */
-    @ApiMethod(
+    /*@ApiMethod(
             name = "list",
             path = "patientKald",
             httpMethod = ApiMethod.HttpMethod.GET)
@@ -209,5 +294,5 @@ public class KaldEndpoint {
         } catch (com.googlecode.objectify.NotFoundException e) {
             throw new NotFoundException("Could not find PatientKald with ID: " + id);
         }
-    }
+    }*/
 }

@@ -40,10 +40,10 @@ public class RegistrationEndpoint {
      */
     @ApiMethod(name = "register")
     public void registerDevice(@Named("regId") String regString) {
-        String[] parts = regString.split(":");
+        String[] parts = regString.split("!");
         String regId = parts[0];
         System.out.println(regId);
-        //String brugerType = parts[1];
+        String brugerType = parts[1];
 
         if (findRecord(regId) != null) {
             log.info("Device " + regId + " already registered, skipping register");
@@ -52,7 +52,7 @@ public class RegistrationEndpoint {
         }
         RegistrationRecord record = new RegistrationRecord();
         record.setRegId(regId);
-        //record.setBrugertype(brugerType);
+        record.setBrugertype(brugerType);
         ofy().save().entity(record).now();
         System.out.println("hejlol");
     }
@@ -65,6 +65,7 @@ public class RegistrationEndpoint {
     @ApiMethod(name = "unregister")
     public void unregisterDevice(@Named("regId") String regId) {
         RegistrationRecord record = findRecord(regId);
+        System.out.println("Unregister");
         if (record == null) {
             log.info("Device " + regId + " not registered, skipping unregister");
             return;

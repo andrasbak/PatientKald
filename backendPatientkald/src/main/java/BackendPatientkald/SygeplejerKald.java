@@ -11,11 +11,10 @@ import com.googlecode.objectify.annotation.Index;
 public class SygeplejerKald {
 
     @Id
-    private String kaldId;
+    Long id;
 
     @Index
-    private String kald;
-    private String data;
+    private String kald, kaldId, data, regId;
 
 
     public SygeplejerKald() {
@@ -41,9 +40,21 @@ public class SygeplejerKald {
         return data;
     }
 
-    public void setData(String beacon) {
-        this.data = beacon;
+    public void setData(String data) {
+        this.data = data;
     }
+
+    public String getRegId() {
+        return regId;
+    }
+
+    public void setRegId(String regId) {
+        this.regId = regId;
+    }
+
+
+
+
 
 }
 

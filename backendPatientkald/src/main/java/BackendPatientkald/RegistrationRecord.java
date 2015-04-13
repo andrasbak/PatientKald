@@ -14,8 +14,7 @@ public class RegistrationRecord {
     Long id;
 
     @Index
-    private String regId;
-    private String brugertype;
+    private String regId, brugertype;
 
     public RegistrationRecord() {
     }
@@ -25,7 +24,7 @@ public class RegistrationRecord {
     }
 
     public void setRegId(String regId) {
-        this.regId = brugertype;
+        this.regId = regId;
     }
 
     public String getBrugertype() {
@@ -35,7 +34,5 @@ public class RegistrationRecord {
     public void setBrugertype(String brugertype) {
         this.brugertype = brugertype;
     }
-
-
 
 }

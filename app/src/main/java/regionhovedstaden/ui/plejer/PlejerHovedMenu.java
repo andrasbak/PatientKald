@@ -1,6 +1,5 @@
 package regionhovedstaden.ui.plejer;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.preference.PreferenceManager;
@@ -10,16 +9,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import regionhovedstaden.AfstandOgBesked;
-import regionhovedstaden.MainActivity;
+import regionhovedstaden.gcm.GcmUnRegistrationAsyncTask;
 import regionhovedstaden.ui.R;
 
 public class PlejerHovedMenu extends Fragment implements View.OnClickListener {
 
     Button assistance;
     TextView afdeling;
-    String message, gemtAfdeling;
-    AfstandOgBesked afstandOgBesked = new AfstandOgBesked();
+    String gemtAfdeling;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,12 +40,6 @@ public class PlejerHovedMenu extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
 
         System.out.println("DU HAR TRYKKET ASSISTANCE!");
-        message = "assistance";
-        afstandOgBesked.bygPatientKald(message);
-
-        ((MainActivity)getActivity()).bindBeacon();
-
-        afstandOgBesked.findTaettesteBeacon();
 
     }
 
@@ -57,6 +49,14 @@ public class PlejerHovedMenu extends Fragment implements View.OnClickListener {
                 .getString("afdeling", "");
 
         afdeling.setText(gemtAfdeling);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        new GcmUnRegistrationAsyncTask(getActivity()).execute();
 
     }
 }

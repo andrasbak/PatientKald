@@ -12,10 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import regionhovedstaden.App;
+import regionhovedstaden.Data.App;
 import regionhovedstaden.gcm.GcmRegistrationAsyncTask;
-import regionhovedstaden.ui.R;import regionhovedstaden.ui.patient.LogInd;
-import regionhovedstaden.ui.patient.PatientHovedMenu;
+import regionhovedstaden.ui.patient.LogInd;
 import regionhovedstaden.ui.plejer.PlejerHovedMenu;
 
 
@@ -41,7 +40,7 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
 
         hentAfdeling();
 
-       return hovedMenu;
+        return hovedMenu;
     }
 
     @Override
@@ -56,6 +55,7 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             brugerType = "patient";
+            registrer();
 
         }
         else if(view.equals(plejer)) {
@@ -64,6 +64,7 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             brugerType = "plejer";
+            registrer();
 
         }
 
@@ -78,10 +79,6 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
                 .putString("afdeling", afdeling.getText().toString()).commit();
 
         App.brugerType = brugerType;
-
-        new GcmRegistrationAsyncTask(getActivity()).execute();
-
-
     }
 
     public void hentAfdeling(){
@@ -90,6 +87,13 @@ public class HovedMenu extends Fragment implements View.OnClickListener {
                 .getString("afdeling", "");
 
         afdeling.setText(gemtAfdeling);
+
+    }
+
+    public void registrer(){
+
+        new GcmRegistrationAsyncTask(getActivity()).execute();
+
 
     }
 }

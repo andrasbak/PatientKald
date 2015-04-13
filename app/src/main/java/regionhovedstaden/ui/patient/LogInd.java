@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import regionhovedstaden.AfstandOgBesked;
 import regionhovedstaden.MainActivity;
+import regionhovedstaden.gcm.GcmUnRegistrationAsyncTask;
 import regionhovedstaden.ui.R;
 
 
@@ -61,7 +61,7 @@ public class LogInd extends Fragment implements View.OnClickListener{
                 gemData();
                 sletTekst();
 
-                ((MainActivity)getActivity()).setPatient();
+                ((MainActivity)getActivity()).getPatient();
                 opretHovedMenu();
             }
         }
@@ -71,11 +71,11 @@ public class LogInd extends Fragment implements View.OnClickListener{
      */
     private void gemData(){
 
-             PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                     .putString("patientNavn", indtastetNavn.getText().toString())
-                     .putString("patientCpr", intastetCpr.getText().toString())
-                     .putString("patientStue", indtastetStue.getText().toString())
-                     .commit();
+        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                .putString("patientNavn", indtastetNavn.getText().toString())
+                .putString("patientCpr", intastetCpr.getText().toString())
+                .putString("patientStue", indtastetStue.getText().toString())
+                .commit();
 
     }
     private void toast(){
@@ -99,6 +99,14 @@ public class LogInd extends Fragment implements View.OnClickListener{
         fragmentTransaction.replace(R.id.container, new PatientHovedMenu());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        new GcmUnRegistrationAsyncTask(getActivity()).execute();
 
     }
 }
